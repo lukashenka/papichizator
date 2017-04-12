@@ -1,8 +1,8 @@
-package main
+package papichizator
 
 import (
 	"fmt"
-	"github.com/lukashenka/papichizator"
+	"./papichizator"
 )
 
 func main()  {
