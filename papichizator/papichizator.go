@@ -6,10 +6,9 @@ type Papichizable interface {
 }
 
 type Papichizator struct {
-	toPapichize string
 }
 
 func (p *Papichizator) Papichize(text string) string  {
 
-	return  p.toPapichize
+	return  text + "ич"
 }

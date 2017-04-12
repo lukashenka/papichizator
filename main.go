@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"./papichizator/"
+	"github.com/lukashenka/papichizator"
 )
 
 func main()  {
 
 	pp:=  papichizator.Papichizator{}
-	fmt.Println(pp.toPapichize)
+	fmt.Println(pp.Papichize("sdsfsdf"))
 
 }
