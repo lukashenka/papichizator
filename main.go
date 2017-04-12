@@ -8,6 +8,6 @@ import (
 func main()  {
 
 	pp:=  papichizator.Papichizator{}
-	fmt.Println(pp.Papichize("sdsfsdf"))
+	fmt.Println(pp.Papichize("Привет, даун аахах, хах хах ах изи хуизи		"))
 
 }
