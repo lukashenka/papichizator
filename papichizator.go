@@ -5,7 +5,6 @@ import (
 	"time"
 	"math/rand"
 	"regexp"
-	"fmt"
 )
 
 type Papichizable interface {
@@ -28,7 +27,13 @@ func (p *Papichizator) Papichize(text string) string {
 		betweenSpecialRange[1] = lastEnd
 		end := index[1]
 		lastEnd = end
-		specialWord := text[betweenSpecialRange[1]:betweenSpecialRange[0]]
+
+		specialWord := ""
+
+		if betweenSpecialRange[1]-betweenSpecialRange[0] > 0 {
+			specialWord = text[betweenSpecialRange[1]:betweenSpecialRange[0]]
+		}
+
 		word := text[start:end]
 		papichWord := ""
 		translate, ok := translate(word)
@@ -36,8 +41,12 @@ func (p *Papichizator) Papichize(text string) string {
 			papichWord = translate
 
 		} else {
-			if len(word) > 4 {
-				papichWord =ichizator(word)
+			if len(word) > 6 {
+				if rand.Intn(2) == 0 {
+					papichWord = ichizator(word)
+				} else {
+					papichWord = word
+				}
 			} else {
 				papichWord = word
 			}
@@ -47,58 +56,58 @@ func (p *Papichizator) Papichize(text string) string {
 				papichWord = papichWord
 			}
 		}
-		papichSays[k] = papichWord + specialWord
+		papichSays[k] = strings.TrimSpace(papichWord) + strings.TrimSpace(specialWord)
 
-		fmt.Println(index)
 	}
 
 	return strings.Join(papichSays, " ")
 }
 
 func ichizator(word string) string {
-	lastSymb := word[len(word) -2:]
-	fmt.Println(lastSymb)
-	hardEndings := map[string]bool {
-		"б":true,
-		"г":true,
-		"з":true,
-		"к":true,
-		"л":true,
-		"п":true,
-		"ц":true,
-		"ч":true,
-		"щ":true,
-		"в":false,
-		"ж":false,
-		"д":false,
-		"м":false,
-		"н":false,
-		"р":false,
-		"с":false,
-		"т":false,
-		"ф":false,
-		"х":false,
+	if len(word) < 3 {
+		return word
+	}
+	lastSymb := word[len(word)-2:]
+	hardEndings := map[string]bool{
+		"б": true,
+		"г": true,
+		"з": true,
+		"к": true,
+		"л": true,
+		"п": true,
+		"ц": true,
+		"ч": true,
+		"щ": true,
+		"в": false,
+		"ж": false,
+		"д": false,
+		"м": false,
+		"н": false,
+		"р": false,
+		"с": false,
+		"т": false,
+		"ф": false,
+		"х": false,
 		"ш": false,
 	}
-
 
 	isI, isHard := hardEndings[lastSymb]
 	if isHard {
 		if isI {
-			return word + "ич"
+			return word + "ич "
 		} else {
-			return word + "ыч"
+			return word + "ыч "
 		}
 	} else {
-		return ichizator(word[:len(word) -2])
+		return ichizator(word[:len(word)-2])
 	}
 
 	return "что блять за слово"
 }
 func curse(word string) string {
 
-	curses:= []string{"блять","тварына","уебище","мать сдохла","ныыыаааа"}
-	return word + " " + curses[rand.Intn(len(curses))] + " "
+	curses := []string{"блять", "тварына", "уебище", "мать сдохла", "найс"}
+	return word + "" + curses[rand.Intn(len(curses))] + ""
 }
 
 func translate(word string) (string, bool) {
